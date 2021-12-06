@@ -1,90 +1,123 @@
+const Insta = require('./insta.js');
+const client = new Insta.Client();
+const chatbot = require("node-fetch").default;
 const express = require('express');
 const app = express();
+//const bodyParser = require('body-parser');
+//const { json } = require('body-parser');
+
 const port = 3000;
-const fetch = require('node-fetch')
-const bodyParser = require('body-parser');
-const { json } = require('body-parser');
-app.listen(port, () => {console.log(`Listening on http://localhos:${port}!`)});
-// NodeJS
+app.listen(port, () => {console.log(`Listening on http://localhost:${port}!`)});
 
 
 
 
-fetch('https://node-red-yrbsr-2021-11-03.mybluemix.net/instagram?mensage=oi&usuario=well')
+
+var js = 
+  {
+    "recipient":{
+    "id":"<IGSID>"
+    },
+      "messaging_type": "RESPONSE",
+      "message":{
+      "text": "<SOME_TEXT>",
+      "quick_replies":[
+        {
+          "content_type":"text",
+          "title":"<TITLE_1>",
+          "payload":"<POSTBACK_PAYLOAD_1>"
+        },
+        {
+          "content_type":"text",
+          "title":"<TITLE_2>",
+          "payload":"<POSTBACK_PAYLOAD_2>"
+        }
+      ]
+    } 
+  }
+
+
+  client.on('connected', () => {
+      console.log(`${client.user.username} Is Ready Now For Chats ${client.user.fullName}, ${client.user}`);
+  });
+  
+  client.on('messageCreate', (message) => {
+      if (message.author.id === client.user.id) return
+      message.markSeen();
+  
+      if(message.content.toLowerCase().includes('hi')){ 
+          return message.chat.sendMessage('VENOM IS MY DEVELOPER CHECK OUT HIS CHANNEL :- https://youtube.com/c/VenomExE');
+      } else
+      chatbot(`https://node-red-yrbsr-2021-11-03.mybluemix.net/instagram?mensage=${message}'&usuario=${message.author.fullName}`)
+      .then(res => res.json())
+      .then(json => {
+  
+          for (var i=0; i<json.length; i++) {
+            message.chat.sendMessage(json[i].text || json[i].title);
+              for (var key in json[i]) {
+                console.log(json[i][key].length)
+                console.log(json[i][key])
+              if(json[i][key].length == 3){
+                for (var j= 0; j<json[i][key].length; j++) {
+                  message.chat.sendMessage(json[i][key][j].label)
+                  console.log(json[i][key][j].label);
+                  }
+              
+              }
+              //console.log(json[i][key]);
+            }
+          }
+  
+      }).catch(err => {});
+  });
+  
+  client.login('w_jr01', 'ooqqewro1506');
+
+
+
+
+
+
+
+
+
+/* const Insta = require('./insta.js');
+const client = new Insta.Client();
+const chatbot = require("node-fetch").default;
+
+client.on('connected', () => {
+    console.log(`${client.user.username} Is Ready Now For Chats ${client.user.fullName}, ${client.user}`);
+});
+
+client.on('messageCreate', (message) => {
+    if (message.author.id === client.user.id) return
+    message.markSeen();
+
+    if(message.content.toLowerCase().includes('hi')){ 
+        return message.chat.sendMessage('VENOM IS MY DEVELOPER CHECK OUT HIS CHANNEL :- https://youtube.com/c/VenomExE');
+    } else
+    chatbot(`https://node-red-yrbsr-2021-11-03.mybluemix.net/instagram?mensage=${message}'&usuario=${message.author.fullName}`)
     .then(res => res.json())
     .then(json => {
 
-/*         json.forEach(json => {
-            Object.entries(json).forEach(([key, value]) => {
-              console.log(`${key} ${value}`);
-              
-            });
-            console.log('-------------------');
-          });
-    }); */
-        
-
-    for (var i=0; i<json.length; i++) {
-        
-        for (var key in json[i]) {
-                console.log(json[i][key])
+        for (var i=0; i<json.length; i++) {
+          message.chat.sendMessage(json[i].text || json[i].title);
+            for (var key in json[i]) {
+              console.log(json[i][key].length)
+              console.log(json[i][key])
             if(json[i][key].length == 3){
-                for (var j= 0; j<json[i][key].length; j++) {
-                console.log(json[i][key][j])
+              for (var j= 0; j<json[i][key].length; j++) {
+                message.chat.sendMessage(json[i][key][j].label)
+                console.log(json[i][key][j].label);
                 }
-            }
-/*             for (var j= 0; j<json[i][key].length; j++) {
-                console.log("======================")
-                //console.log(json[i][key][j])
-                console.log(json[i][key].length)
-                console.log("======================")
-            } */
-        }
-     }
-    })
-/*         for (var index = 0; index <= json.length; index++){
-            var label = 0;
-            if (label <= index){
-                for(label; label < json.length; label++){
-                    //console.log(json)
-    
-                    console.log(label+"label") //contador1
-                    //console.log(json[index].text)
-                    //labels
-                }
-            }
-
-                console.log(index+"index1") //contador2
-            //console.log(JSON.stringify(json[index]))
-
-            //console.log(json[index].options.label)
             
-            
-            //console.log(JSON.stringify(json[index].text || json[index].title || json[index].options))
-            
-            //console.log(JSON.parse(json[index]))
-        }
-    }) */
- 
-
-/*     curl -X POST -H "Content-Type: application/json" -d '{
-        "recipient":{
-          "id":"<IGSID>"
-        },
-        "messaging_type": "RESPONSE",
-        "message":{
-          "text": "<SOME_TEXT>",
-          "quick_replies":[
-            {
-              "content_type":"text",
-              "title":"<TITLE_1>",
-              "payload":"<POSTBACK_PAYLOAD_1>"
-            },
-            {
-              "content_type":"text",
-              "title":"<TITLE_2>",
-              "payload":"<POSTBACK_PAYLOAD_2>"
             }
-          ]
+            //console.log(json[i][key]);
+          }
         }
-      }' "https://graph.facebook.com/v8.0/me/messages?access_token=<PAGE_ACCESS_TOKEN>" */
+
+    }).catch(err => {});
+});
+
+client.login('test_instabotw1506', 'ooqqewro');
+ */
