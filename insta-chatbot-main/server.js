@@ -3,18 +3,17 @@ const client = new Insta.Client();
 const chatbot = require("node-fetch").default;
 const express = require('express');
 const app = express();
-//const bodyParser = require('body-parser');
-//const { json } = require('body-parser');
+const bodyParser = require('body-parser');
+const { json } = require('body-parser');
 
-const port = 3000;
+const port = 8080;
 app.listen(port, () => {console.log(`Listening on http://localhost:${port}!`)});
 
 
 
 
 
-var js = 
-  {
+/* var js = {
     "recipient":{
     "id":"<IGSID>"
     },
@@ -34,7 +33,7 @@ var js =
         }
       ]
     } 
-  }
+  } */
 
 
   client.on('connected', () => {
@@ -46,9 +45,9 @@ var js =
       message.markSeen();
   
       if(message.content.toLowerCase().includes('hi')){ 
-          return message.chat.sendMessage('VENOM IS MY DEVELOPER CHECK OUT HIS CHANNEL :- https://youtube.com/c/VenomExE');
+          console.log(js);
       } else
-      chatbot(`https://node-red-yrbsr-2021-11-03.mybluemix.net/instagram?mensage=${message}'&usuario=${message.author.fullName}`)
+      chatbot(`https://node-red-yrbsr-2021-11-03.mybluemix.net/instagram?mensage=oi'&usuario=well`)
       .then(res => res.json())
       .then(json => {
   
@@ -64,14 +63,14 @@ var js =
                   }
               
               }
-              //console.log(json[i][key]);
+              console.log(json[i][key]);
             }
           }
   
       }).catch(err => {});
   });
   
-  client.login('w_jr01', 'ooqqewro1506');
+  client.login('well.four', 'ooqqewro');
 
 
 
