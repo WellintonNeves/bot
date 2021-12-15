@@ -1,12 +1,14 @@
 const express = require('express');
 const app = express();
-const port = 3000;
 const addUrl = require('node-fetch').default
 const bodyParser = require('body-parser');
 
 // NodeJS
 const Insta = require('./insta.js');
 const client = new Insta.Client();
+
+app.use(bodyParser.urlencoded({extended:true}))
+
 
 client.on('connected', () => {
   console.log(`${client.user.username} Is Ready Now For Chats`);
@@ -45,6 +47,9 @@ client.on('messageCreate', (message) => {
   })
 })
 
+
+client.login('w_jr01', 'Wjr1506@');
+
 app.get('/', (req, res) =>{
   res.send('oi');
 })
@@ -54,12 +59,21 @@ app.get('/pgt', (req, res) =>{
   res.send('pergunta?' + msg);
 })
 
-app.get('/msg/:tipo', (req,res) =>{
+app.get('/msg/:tipo/:id', (req,res) =>{
   msg1 = req.params.tipo;
+  msg2 = req.params.id;
   res.send("resposta:" + msg1)
 })
 
+app.post('/envio', (req, res) =>{
+  console.log(req);
+  const video = req.query.video
+  const erro = req.query.erro
+  const consultor = req.query.consultor
+})
 
-client.login('w_jr01', 'Wjr1506@');
 
-app.listen(port, () => {console.log(`Listening on http://localhost:${port}!`)});
+
+const port = process.env.PORT || 3000;
+const localhost = "127.0.0.1";
+app.listen(port, () => {console.log(`Listening on http://${localhost}:${port}!`)});
