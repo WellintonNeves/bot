@@ -15,7 +15,7 @@
     "express": "^4.17.1",
     "http": "^0.0.1-security",
     "https": "^1.0.0",
-    "instagram_mqtt": "^1.2.2",
+    "instagram_mqtt": "^0.1.17",
     "node-fetch": "^2.6.6",
     "nodemon": "^2.0.15",
     "server.js": "^1.0.0"
