@@ -47,7 +47,7 @@ client.on('messageCreate', (message) => {
     }   
   })
 })
-client.login('w_jr01', 'Wjr1506@');
+client.login('well.five', 'ooqqewro');
 
 //end code
 
