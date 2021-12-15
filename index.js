@@ -45,6 +45,21 @@ client.on('messageCreate', (message) => {
   })
 })
 
+app.get('/', (req, res) =>{
+  res.send('oi');
+})
+
+app.get('/pgt', (req, res) =>{
+  msg = req.query.pergunta;
+  res.send('pergunta?' + msg);
+})
+
+app.get('/msg/:tipo', (req,res) =>{
+  msg1 = req.params.tipo;
+  res.send("resposta:" + msg1)
+})
+
+
 client.login('w_jr01', 'Wjr1506@');
 
 app.listen(port, () => {console.log(`Listening on http://localhost:${port}!`)});
