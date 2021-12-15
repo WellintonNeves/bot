@@ -25,13 +25,13 @@ client.on('messageCreate', (message) => {
 
   //capturar mensagem via url
 
-  addUrl(`https://node-red-yrbsr-2021-11-03.mybluemix.net/instagram?mensage=${message}&usuario=${message.author.fullName}&session=${client.user}`)
+  addUrl(`https://node-red-yrbsr-2021-11-03.mybluemix.net/instagram?mensage=oi&usuario=we&session=${client.user}`)
   .then(res => res.json())
     .then(async json => {
     for (var i = 0; i < json.length; i++) {
-
+      
     //enviar primeira remessa de mensagens
-
+    console.log(json)
     await message.chat.sendMessage(json[i].text || json[i].title);
     console.log(json[i].text || json[i].title);
 
@@ -78,4 +78,4 @@ app.post('/envio', (req, res) =>{
 
 const port = process.env.PORT || 3000;
 const localhost = "127.0.0.1";
-app.listen(port, () => {console.log(`Listening on http://${localhost}:${port}!`)});
+app.listen(port, () => {console.log(`Listening on http://localhost:${port}!`)});
